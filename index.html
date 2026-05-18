@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Céleste — Épicerie Fine & Artisanat Local</title>
+    <meta name="description" content="Découvrez Maison Céleste, votre boutique locale d'épicerie fine, céramiques artisanales, thés biologiques et bougies naturelles. Click & Collect et livraison express.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+    
+    <!-- CSS Design System -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- En-tête / Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="#" class="logo" aria-label="Retour à l'accueil">
+                <span class="logo-title">Maison Céleste</span>
+                <span class="logo-subtitle">Épicerie Fine & Artisanat</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Navigation principale">
+                <a href="#" class="nav-link" onclick="resetFilters()">Accueil</a>
+                <a href="#catalogue" class="nav-link" onclick="resetFilters()">Catalogue</a>
+                <a href="#suivi" class="nav-link" onclick="openTrackingModal()">Suivi de commande</a>
+                <a href="#support" class="nav-link" onclick="openSupportModal()">Support & FAQ</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="action-btn" onclick="openTrackingModal()" aria-label="Suivi de commande">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <span>Suivi</span>
+                </button>
+                <button class="action-btn" onclick="openSupportModal()" aria-label="Support client">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <span>Aide</span>
+                </button>
+                <button class="action-btn cart-btn" onclick="openCartDrawer()" aria-label="Ouvrir le panier">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span>Panier</span>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Bannière Héroïque (Hero Banner) -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <span class="hero-tag">Nouveau : Collection Printemps 2026</span>
+                    <h1 id="hero-title" class="hero-title">L'artisanat local, <italic>élevé au rang d'art.</italic></h1>
+                    <p class="hero-description">
+                        Maison Céleste sélectionne avec passion les meilleurs produits du terroir et créations d'artisans de notre région. Des saveurs authentiques et des objets façonnés pour durer.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#catalogue" class="btn btn-primary">Explorer le catalogue</a>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=1200&q=80" alt="Présentation de produits artisanaux Maison Céleste" class="hero-image" fetchpriority="high" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80';">
+                </div>
+            </div>
+        </section>
+
+        <!-- Barre de Filtres, Tri & Recherche -->
+        <section id="catalogue" class="controls-section" aria-label="Filtres et recherche de produits">
+            <div class="controls-container">
+                <div class="categories-group" role="group" aria-label="Filtrer par catégorie">
+                    <button class="category-btn active" data-category="tout">Tout découvrir</button>
+                    <button class="category-btn" data-category="epicerie">Épicerie Fine</button>
+                    <button class="category-btn" data-category="ceramique">Céramiques</button>
+                    <button class="category-btn" data-category="thes">Thés & Infusions</button>
+                    <button class="category-btn" data-category="bougies">Bougies Artisanales</button>
+                </div>
+
+                <div class="filters-actions-group">
+                    <div class="search-box">
+                        <span class="search-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+                        <input type="search" id="search-input" placeholder="Rechercher un produit, un artisan..." aria-label="Rechercher un produit">
+                    </div>
+
+                    <div class="price-filter-box">
+                        <label for="price-slider">Prix max :</label>
+                        <input type="range" id="price-slider" min="5" max="40" step="1" value="40">
+                        <span id="price-display">40€</span>
+                    </div>
+
+                    <div class="sort-box">
+                        <label for="sort-select">Trier par :</label>
+                        <select id="sort-select" aria-label="Trier les produits">
+                            <option value="popularite">Popularité</option>
+                            <option value="note">Mieux notés</option>
+                            <option value="prix-asc">Prix : croissant</option>
+                            <option value="prix-desc">Prix : décroissant</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grille de Produits -->
+        <section class="catalog-section" aria-labelledby="catalog-title">
+            <div class="catalog-header">
+                <h2 id="catalog-title" class="catalog-title">Notre Sélection Artisanale</h2>
+                <span id="products-count" class="products-count">8 produits</span>
+            </div>
+            <div id="products-grid" class="products-grid">
+                <!-- Les produits sont injectés dynamiquement par JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Pied de Page / Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Maison Céleste</h4>
+                <p class="footer-desc">
+                    Notre mission est de soutenir l'artisanat d'excellence et les producteurs locaux en vous proposant une sélection exigeante, éthique et d'une qualité irréprochable.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Boutique</h4>
+                <div class="footer-links">
+                    <a href="#catalogue" onclick="resetFilters()">Tous les produits</a>
+                    <a href="#catalogue" onclick="document.querySelector('[data-category=\'epicerie\']').click()">Épicerie Fine</a>
+                    <a href="#catalogue" onclick="document.querySelector('[data-category=\'ceramique\']').click()">Céramiques</a>
+                    <a href="#catalogue" onclick="document.querySelector('[data-category=\'thes\']').click()">Thés & Infusions</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <div class="footer-links">
+                    <a href="#" onclick="openTrackingModal(); return false;">Suivi de commande</a>
+                    <a href="#" onclick="openSupportModal(); return false;">Support & FAQ</a>
+                    <a href="#" onclick="openSupportModal(); return false;">Click & Collect</a>
+                    <a href="#" onclick="openSupportModal(); return false;">Livraison locale</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Nous Trouver</h4>
+                <p class="footer-desc">
+                    14 Rue des Artisans<br>
+                    33000 Bordeaux, France<br><br>
+                    <strong>Horaires :</strong><br>
+                    Mardi - Samedi : 10h - 19h
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Maison Céleste. Fait avec passion pour l'artisanat local.</span>
+            <span>Design rigoureux & Impeccable (Anti-IA)</span>
+        </div>
+    </footer>
+
+    <!-- ======================================================================
+         TIROIR DU PANIER & OVERLAY (Cart Drawer)
+         ====================================================================== -->
+    <div id="cart-overlay" class="cart-overlay" aria-hidden="true"></div>
+    <div id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title">
+        <div class="cart-drawer-header">
+            <h3 id="cart-drawer-title" class="cart-drawer-title">Votre Panier (<span class="cart-count">0</span>)</h3>
+            <button class="drawer-close-btn" onclick="closeCartDrawer()" aria-label="Fermer le panier">×</button>
+        </div>
+        <div class="free-shipping-banner">
+            <p class="free-shipping-text">Plus que <strong>50.00€</strong> pour profiter de la livraison gratuite.</p>
+            <div class="free-shipping-progress">
+                <div class="free-shipping-progress-bar"></div>
+            </div>
+        </div>
+        <div class="cart-drawer-items">
+            <!-- Articles injectés par JS -->
+        </div>
+        <div class="cart-drawer-footer">
+            <div class="cart-summary-row">
+                <span>Sous-total</span>
+                <span class="cart-subtotal">0.00€</span>
+            </div>
+            <div class="cart-summary-row">
+                <span>Frais de livraison estimé</span>
+                <span class="cart-shipping">0.00€</span>
+            </div>
+            <div class="cart-summary-row total">
+                <span>Total estimé</span>
+                <span class="cart-total">0.00€</span>
+            </div>
+            <button class="btn btn-primary checkout-btn" onclick="openCheckoutModal()">Passer la commande</button>
+        </div>
+    </div>
+
+    <!-- ======================================================================
+         MODALE D'APERÇU RAPIDE & AVIS (Quick View Modal)
+         ====================================================================== -->
+    <div id="quick-view-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="qv-title">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeQuickViewModal()" aria-label="Fermer l'aperçu rapide">×</button>
+            <div class="quick-view-grid">
+                <div class="qv-img-wrapper">
+                    <img src="" alt="" class="qv-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=800&q=80';">
+                </div>
+                <div class="qv-details-container">
+                    <span class="qv-category">Catégorie</span>
+                    <h3 id="qv-title" class="qv-title">Nom du produit</h3>
+                    <div class="qv-rating-row">
+                        <span class="qv-stars">★ 5.0</span>
+                        <span class="qv-reviews-count">(0 avis)</span>
+                    </div>
+                    <div class="qv-price">0.00€</div>
+                    <p class="qv-description">Description du produit...</p>
+                    <div class="qv-details-box">
+                        <strong>Détails & Spécifications :</strong>
+                        <p class="qv-details"></p>
+                    </div>
+                    <button class="btn btn-primary qv-add-to-cart-btn">Ajouter au panier</button>
+
+                    <!-- Section des Avis Clients -->
+                    <div class="qv-reviews-section">
+                        <h4>Avis Clients</h4>
+                        <div class="reviews-list">
+                            <!-- Avis injectés par JS -->
+                        </div>
+
+                        <!-- Formulaire pour ajouter un avis -->
+                        <div class="review-form-card">
+                            <h5>Donnez votre avis sur ce produit</h5>
+                            <form id="review-form" onsubmit="handleReviewSubmit(event)">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="review-author">Votre nom :</label>
+                                        <input type="text" id="review-author" name="author" class="form-control" required placeholder="Ex: Sophie M.">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="review-rating">Note :</label>
+                                        <select id="review-rating" name="rating" class="form-control" required>
+                                            <option value="5">5 ★★★★★ - Excellent</option>
+                                            <option value="4">4 ★★★★☆ - Très bon</option>
+                                            <option value="3">3 ★★★☆☆ - Correct</option>
+                                            <option value="2">2 ★★☆☆☆ - Décevant</option>
+                                            <option value="1">1 ★☆☆☆☆ - Médiocre</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="review-comment">Votre commentaire :</label>
+                                    <textarea id="review-comment" name="comment" class="form-control" rows="3" required placeholder="Partagez votre expérience avec ce produit..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Publier mon avis</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================================
+         MODALE DE CHECKOUT (Formulaire de Commande)
+         ====================================================================== -->
+    <div id="checkout-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeCheckoutModal()" aria-label="Fermer la finalisation">×</button>
+            <div class="modal-header">
+                <h3 id="checkout-title" class="modal-title">Finalisation de votre commande</h3>
+            </div>
+            <div class="modal-body">
+                <form id="checkout-form">
+                    <div class="checkout-grid">
+                        <div class="checkout-form-fields">
+                            <h4 style="margin-bottom: var(--space-4);">Adresse de livraison</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="checkout-name">Nom complet :</label>
+                                    <input type="text" id="checkout-name" name="name" class="form-control" required placeholder="Jean Dupont">
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkout-email">Adresse e-mail :</label>
+                                    <input type="email" id="checkout-email" name="email" class="form-control" required placeholder="jean.dupont@email.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkout-address">Adresse postale :</label>
+                                <input type="text" id="checkout-address" name="address" class="form-control" required placeholder="12 Avenue des Champs">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="checkout-postal">Code postal :</label>
+                                    <input type="text" id="checkout-postal" name="postal" class="form-control" required placeholder="33000">
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkout-city">Ville :</label>
+                                    <input type="text" id="checkout-city" name="city" class="form-control" required placeholder="Bordeaux">
+                                </div>
+                            </div>
+
+                            <h4 style="margin-top: var(--space-5); margin-bottom: var(--space-4);">Paiement (Simulation Sécurisée)</h4>
+                            <div class="form-group">
+                                <label for="checkout-card">Numéro de carte bancaire fictive :</label>
+                                <input type="text" id="checkout-card" class="form-control" required placeholder="1234 5678 9101 1121" pattern="[0-9\s]{16,19}">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="checkout-exp">Date d'expiration :</label>
+                                    <input type="text" id="checkout-exp" class="form-control" required placeholder="MM/AA">
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkout-cvv">CVV :</label>
+                                    <input type="text" id="checkout-cvv" class="form-control" required placeholder="123">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);">
+                                Confirmer et Payer
+                            </button>
+                        </div>
+                        <div class="checkout-summary-box">
+                            <h4 style="margin-bottom: var(--space-4);">Récapitulatif</h4>
+                            <div class="checkout-summary-items">
+                                <!-- Articles du récapitulatif -->
+                            </div>
+                            <div class="checkout-summary-total-row">
+                                <span>Total à régler :</span>
+                                <span class="checkout-summary-total">0.00€</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================================
+         MODALE DE CONFIRMATION DE COMMANDE
+         ====================================================================== -->
+    <div id="order-confirm-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+        <div class="modal-content" style="max-width: 650px;">
+            <div class="order-confirm-content">
+                <div class="confirm-icon"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-green); margin: 0 auto var(--space-3) auto; display: block;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <h3 id="confirm-title">Merci pour votre commande !</h3>
+                <p>Votre commande a été enregistrée avec succès et est transmise à notre atelier.</p>
+                <div class="confirm-box">
+                    <p style="margin-bottom: var(--space-2);">Votre numéro de suivi :</p>
+                    <h4 class="confirm-order-id" style="font-size: 1.8rem; color: var(--accent-gold); margin-bottom: var(--space-3);">CMD-12345</h4>
+                    <p style="font-size: 0.95rem;">Date de livraison estimée : <strong class="confirm-est-date">20 Mai 2026</strong></p>
+                </div>
+                <button class="btn btn-primary" onclick="closeOrderConfirmModal()">Retour à la boutique</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================================
+         MODALE DE SUIVI DE COMMANDE (Order Tracking)
+         ====================================================================== -->
+    <div id="tracking-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="tracking-title">
+        <div class="modal-content" style="max-width: 700px;">
+            <button class="modal-close-btn" onclick="closeTrackingModal()" aria-label="Fermer le suivi">×</button>
+            <div class="modal-header">
+                <h3 id="tracking-title" class="modal-title">Suivi de votre commande</h3>
+            </div>
+            <div class="modal-body">
+                <form id="tracking-form" class="tracking-search-box">
+                    <input type="text" id="tracking-input" class="form-control" placeholder="Entrez votre numéro de commande (ex: CMD-84920)" required>
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </form>
+                <div id="tracking-result">
+                    <!-- Résultat du suivi injecté par JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================================
+         MODALE DE SUPPORT CLIENT & FAQ
+         ====================================================================== -->
+    <div id="support-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="support-title">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeSupportModal()" aria-label="Fermer le support">×</button>
+            <div class="modal-header">
+                <h3 id="support-title" class="modal-title">Support Client & Questions Fréquentes</h3>
+            </div>
+            <div class="modal-body">
+                <div class="support-tabs">
+                    <div class="faq-section">
+                        <h4 style="margin-bottom: var(--space-4);">Questions Fréquentes (FAQ)</h4>
+                        <div class="faq-accordion">
+                            <div class="faq-group">
+                                <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">Comment fonctionne le Click & Collect ?</button>
+                                <div class="faq-answer">
+                                    <p>Passez votre commande en ligne et venez la retirer gratuitement dans notre boutique de Bordeaux sous 2 heures pendant nos horaires d'ouverture.</p>
+                                </div>
+                            </div>
+                            <div class="faq-group">
+                                <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">Quels sont les délais de livraison locale ?</button>
+                                <div class="faq-answer">
+                                    <p>Nous livrons par coursier à vélo sur Bordeaux et sa métropole en 24h à 48h. Pour le reste de la France, comptez 3 jours ouvrés.</p>
+                                </div>
+                            </div>
+                            <div class="faq-group">
+                                <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">Puis-je retourner un produit en céramique ?</button>
+                                <div class="faq-answer">
+                                    <p>Oui, vous disposez de 14 jours pour nous retourner un article dans son emballage d'origine intact, à l'exception des produits alimentaires oucellés.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-section">
+                        <h4 style="margin-bottom: var(--space-4);">Nous contacter directement</h4>
+                        <form id="support-form">
+                            <div class="form-group">
+                                <label for="support-name">Votre nom :</label>
+                                <input type="text" id="support-name" class="form-control" required placeholder="Jean Dupont">
+                            </div>
+                            <div class="form-group">
+                                <label for="support-email">Votre adresse e-mail :</label>
+                                <input type="email" id="support-email" class="form-control" required placeholder="jean.dupont@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="support-msg">Votre message :</label>
+                                <textarea id="support-msg" class="form-control" rows="4" required placeholder="Comment pouvons-nous vous aider ?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer mon message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteneur pour les Toasts de Notification -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Scripts JS -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
