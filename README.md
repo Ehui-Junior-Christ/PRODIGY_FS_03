@@ -67,7 +67,7 @@ Pour tester et explorer l'application sur votre machine locale :
 
 1. Ouvrez le dossier du projet :
    ```bash
-   cd c:\Users\junio\Desktop\Prodigy\PRODIGY_FS_03
+   cd c:\TON_ORDINATEUR\Prodigy\PRODIGY_FS_03
    ```
 
 2. Lancez un serveur web local pour profiter pleinement des fonctionnalités JavaScript (notamment les modules et le `localStorage`). Vous pouvez utiliser par exemple l'extension *Live Server* de VS Code, ou une commande Python :
